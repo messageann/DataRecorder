@@ -32,6 +32,8 @@ class MainWindow(QMainWindow):
         self.ui.delete_act.clicked.connect(self.delete_act)
         self.ui.add_before.clicked.connect(self.before)
         self.ui.add_bf.clicked.connect(self.save_before)
+        self.ui.cancel_script.clicked.connect(self.cancel_scr)
+        self.ui.del_script.clicked.connect(self.delete_script)
 
     # Добавление скрипта
     def new_script(self):
@@ -40,9 +42,18 @@ class MainWindow(QMainWindow):
         self.ui.edit.hide()
         self.ui.save.show()
         self.ui.name.setReadOnly(False)
+        self.ui.del_script.hide()
+        self.ui.cancel_script.show()
         self.ui.add_scene.setText('Добавление сценария')
 
         self.script = Script('')
+
+    # Отмена добавления скрипта
+    def cancel_scr(self):
+        self.clear_frame()
+        self.clear_frame2()
+        self.ui.frame.hide()
+        self.show_scripts()
 
     # Добавление действия
     def new_action(self):
@@ -63,7 +74,7 @@ class MainWindow(QMainWindow):
         self.ui.add_bf.show()
         self.ui.add_before.hide()
 
-    # Добавления действия перед существующим
+    # Сохранение действия перед существующим
     def save_before(self):
         curr_key = self.ui.check.currentText()
         if self.ui.duration.text() == '':
@@ -115,6 +126,18 @@ class MainWindow(QMainWindow):
         else:
             self.script.name = self.ui.name.text()
         self.script.save_script()
+        self.clear_frame()
+        self.clear_frame2()
+        self.ui.frame.hide()
+        self.show_scripts()
+
+    # Удаление существующего сценария
+    def delete_script(self):
+        sc = os.listdir(os.getcwd() + '\\scripts')
+        for file in sc:
+            if file == self.script.name + '.json':
+                os.remove('scripts\\' + file)
+
         self.clear_frame()
         self.clear_frame2()
         self.ui.frame.hide()
@@ -206,6 +229,8 @@ class MainWindow(QMainWindow):
         self.ui.add_act.hide()
         self.ui.name.setText(item.text())
         self.ui.name.setReadOnly(True)
+        self.ui.del_script.show()
+        self.ui.cancel_script.hide()
         sc = os.listdir(os.getcwd() + '\\scripts')
         for file in sc:
             if file == item.text() + '.json':

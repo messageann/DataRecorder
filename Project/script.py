@@ -61,7 +61,6 @@ class Script:
                             exist.append(os.path.splitext(file)[0][-2:-1])
                         else:
                             exist.append(os.path.splitext(file)[0][-1])
-            print(exist)
             if len(exist) > 0:
                 for i in range(len(exist)):
                     if i != int(exist[i])-1:
