@@ -15,9 +15,18 @@ class MainWindow(QMainWindow):
 
     def initUI(self):
         self.setWindowTitle('Scripts beta')
+        self.show_scripts()
+
         self.ui.add.clicked.connect(self.new_script)
         self.ui.list.itemDoubleClicked.connect(self.selected_item)
-        self.show_scripts()
+        self.ui.add_act.clicked.connect(self.new_action)
+        self.ui.save.clicked.connect(self.save)
+        self.ui.add_act_res.clicked.connect(self.save_action)
+        self.ui.add_act_2.clicked.connect(self.add_rest)
+        self.ui.check.activated[str].connect(self.activated_act)
+        self.ui.save_act.clicked.connect(self.edit_action)
+        self.ui.edit.clicked.connect(self.edit_item)
+        self.ui.add_act_3.clicked.connect(self.reset_rest)
 
     # Добавление скрипта
     def new_script(self):
@@ -27,8 +36,6 @@ class MainWindow(QMainWindow):
         self.ui.save.setVisible(True)
         self.ui.name.setReadOnly(False)
         self.ui.add_scene.setText('Добавление сценария')
-        self.ui.add_act.clicked.connect(self.new_action)
-        self.ui.save.clicked.connect(self.save)
 
         self.script = Script('')
 
@@ -38,9 +45,7 @@ class MainWindow(QMainWindow):
         self.ui.frame_2.setVisible(True)
         self.ui.add_act.setVisible(False)
         self.ui.add_act_res.setVisible(True)
-        self.ui.add_act_res.clicked.connect(self.save_action)
         self.ui.add_act_2.setVisible(True)
-        self.ui.add_act_2.clicked.connect(self.add_rest)
 
     # Сохранение сценария
     def save(self):
@@ -53,6 +58,7 @@ class MainWindow(QMainWindow):
         self.clear_frame2()
         self.ui.frame.setVisible(False)
         self.show_scripts()
+
     '''
     # Сохранение переименнованного сценария
     def save_edit(self):
@@ -99,7 +105,6 @@ class MainWindow(QMainWindow):
         for a in self.script.actions.keys():
             acts.append(a)
         self.ui.check.addItems(acts)
-        self.ui.check.activated[str].connect(self.activated_act)
 
     # Выбор действия в чекбоксе
     def activated_act(self, item_selected):
@@ -111,7 +116,6 @@ class MainWindow(QMainWindow):
             self.ui.record_2.setChecked(self.script.actions[item_selected]['record'])
             self.ui.add_act_2.setVisible(False)
             self.ui.save_act.setVisible(True)
-            self.ui.save_act.clicked.connect(self.edit_action)
         else:
             self.ui.frame_2.setVisible(False)
             self.ui.save_act.setVisible(False)
@@ -147,7 +151,6 @@ class MainWindow(QMainWindow):
         self.ui.add_act.setVisible(False)
         self.ui.name.setText(item.text())
         self.ui.name.setReadOnly(True)
-        self.ui.edit.clicked.connect(self.edit_item)
         sc = os.listdir(os.getcwd() + '\\scripts')
         for file in sc:
             if file == item.text() + '.json':
@@ -160,7 +163,6 @@ class MainWindow(QMainWindow):
         self.ui.add_scene.setText('Изменение сценария')
         self.ui.actions.setGeometry(QtCore.QRect(20, 100, 420, 111))
         self.ui.add_act.setVisible(True)
-        self.ui.add_act.clicked.connect(self.new_action)
         self.ui.name.setReadOnly(False)
         self.ui.check.setVisible(True)
         self.ui.edit.setVisible(False)
@@ -168,7 +170,6 @@ class MainWindow(QMainWindow):
         # self.ui.save_edit.clicked.connect(self.save_edit)
         self.show_actions()
         self.list_of_act()
-        self.ui.check.activated[str].connect(self.activated_act)
 
     # Все скрипты
     def show_scripts(self):
@@ -182,7 +183,6 @@ class MainWindow(QMainWindow):
         self.ui.duration_rest.setVisible(True)
         self.ui.add_act_2.setVisible(False)
         self.ui.add_act_3.setVisible(True)
-        self.ui.add_act_3.clicked.connect(self.reset_rest)
 
     # Отмена добавления фазы отдыха
     def reset_rest(self):
@@ -190,6 +190,7 @@ class MainWindow(QMainWindow):
         self.ui.duration_rest.setVisible(False)
         self.ui.add_act_3.setVisible(False)
         self.ui.add_act_2.setVisible(True)
+        return
 
     # Очистить правую часть
     def clear_frame(self):
