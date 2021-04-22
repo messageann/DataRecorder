@@ -1,0 +1,20 @@
+{
+  "action1": {
+    "label": "1",
+    "text": "Hand",
+    "duration": 10,
+    "record": false
+  },
+  "action2": {
+    "label": "2",
+    "text": "Leg",
+    "duration": 5,
+    "record": false
+  },
+  "action3": {
+    "label": null,
+    "text": "\u041e\u0442\u0434\u044b\u0445",
+    "duration": 20,
+    "record": false
+  }
+}
