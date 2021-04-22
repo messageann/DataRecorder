@@ -4,9 +4,9 @@ import sys
 import application
 
 if __name__ == '__main__':
+    QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+    QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
     app = QApplication(sys.argv)
-    app.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-    app.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
     w = application.MainWindow()
     w.show()
     sys.exit(app.exec_())
