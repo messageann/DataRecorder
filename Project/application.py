@@ -28,6 +28,8 @@ class MainWindow(QMainWindow):
         self.ui.edit.clicked.connect(self.edit_item)
         self.ui.add_act_3.clicked.connect(self.reset_rest)
         self.ui.save_edit.clicked.connect(self.save_edit)
+        self.ui.cancel.clicked.connect(self.cancel)
+        self.ui.delete_act.clicked.connect(self.delete_act)
 
     # Добавление скрипта
     def new_script(self):
@@ -44,11 +46,20 @@ class MainWindow(QMainWindow):
     def new_action(self):
         self.clear_frame2()
         self.ui.frame_2.setVisible(True)
+        self.ui.cancel.setVisible(True)
         self.ui.add_act.setVisible(False)
         self.ui.add_act_res.setVisible(True)
-        self.ui.add_act_2.setVisible(True)
 
-    # Сохранение сценария
+    # Отменя добавления действия
+    def cancel(self):
+        self.clear_frame2()
+        self.ui.frame_2.setVisible(False)
+        self.ui.cancel.setVisible(True)
+        self.ui.add_act.setVisible(True)
+        self.ui.add_act_res.setVisible(False)
+        self.ui.cancel.setVisible(False)
+
+    # Сохранение нового сценария
     def save(self):
         if self.ui.name.text() == '':
             self.script.name = 'Unnamed script'
@@ -92,6 +103,16 @@ class MainWindow(QMainWindow):
         self.reset_rest()
         self.show_actions()
         self.list_of_act()
+        self.ui.cancel.setVisible(False)
+
+    # Удаление существующего действия
+    def delete_act(self):
+        key = self.ui.check.currentText()
+        self.script.delete_action(key)
+        self.show_actions()
+        self.ui.delete_act.setVisible(False)
+        self.clear_frame2()
+        self.list_of_act()
 
     # Действия в сценарии
     def show_actions(self):
@@ -115,10 +136,11 @@ class MainWindow(QMainWindow):
             self.ui.record_2.setChecked(self.script.actions[item_selected]['record'])
             self.ui.add_act_2.setVisible(False)
             self.ui.save_act.setVisible(True)
+            self.ui.delete_act.setVisible(True)
         else:
             self.clear_frame2()
 
-    # Отредактированное действие
+    # Редактирование существующего действия
     def edit_action(self):
         key = self.ui.check.currentText()
         if key != '':
@@ -135,7 +157,7 @@ class MainWindow(QMainWindow):
         else:
             self.clear_frame2()
 
-    # Выбранный сценарий
+    # Просмотр выбранного сценария
     def selected_item(self, item):
         self.clear_frame()
         self.clear_frame2()
@@ -157,6 +179,7 @@ class MainWindow(QMainWindow):
                     self.script.actions = json.load(js)
         self.ui.actions.setText(self.script.make_str())
 
+    # Изменение сценария
     def edit_item(self):
         self.ui.add_scene.setText('Изменение сценария')
         self.ui.actions.setGeometry(QtCore.QRect(20, 100, 420, 111))
@@ -168,7 +191,7 @@ class MainWindow(QMainWindow):
         self.show_actions()
         self.list_of_act()
 
-    # Все скрипты
+    # Отобразить все скрипты
     def show_scripts(self):
         self.ui.list.clear()
         sc = os.listdir(os.getcwd() + '\\scripts')
@@ -203,6 +226,8 @@ class MainWindow(QMainWindow):
         self.ui.save_act.setVisible(False)
         self.ui.check.setVisible(True)
         self.ui.actions.setGeometry(QtCore.QRect(20, 100, 420, 111))
+        self.ui.cancel.setVisible(False)
+        self.ui.delete_act.setVisible(False)
 
     # Очистить добавление действия
     def clear_frame2(self):
@@ -212,4 +237,5 @@ class MainWindow(QMainWindow):
         self.ui.record_2.setChecked(False)
         self.ui.frame_2.setVisible(False)
         self.ui.add_act_res.setVisible(False)
+        self.ui.save_act.setVisible(False)
         self.ui.add_act.setVisible(True)

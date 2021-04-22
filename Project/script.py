@@ -16,32 +16,45 @@ class Script:
             self.add_rest()
 
     def add_rest(self, d):
-        self.actions['rest' + str(len(self.actions) + 1)] = {'label': None,
-                                                             'text': 'rest',
+        self.actions['action' + str(len(self.actions) + 1)] = {'label': None,
+                                                             'text': 'Отдых',
                                                              'duration': d,
                                                              'record': False}
 
+    def delete_action(self, key):
+        del self.actions[key]
+        temp, i = {}, 1
+        for key, value in self.actions.items():
+            if key[-1] != str(i):
+                temp[key[:len(key) - 1] + str(i)] = value
+            else:
+                temp[key] = value
+            i += 1
+        self.actions = temp
+        del temp
+
     def save_script(self):
-        exist = []
         number = ''
-        sc = os.listdir(os.getcwd() + '\\scripts')
-        for file in sc:
-            if self.name in os.path.splitext(file)[0]:
-                if self.name == os.path.splitext(file)[0]:
-                    number = ' (1)'
-                else:
-                    if len(os.path.splitext(file)[0]) > 2:
-                        exist.append(os.path.splitext(file)[0][-2:-1])
+        if os.path.exists(os.getcwd() + '\\scripts\\' + self.name + '.json'):
+            exist = []
+            sc = os.listdir(os.getcwd() + '\\scripts')
+            for file in sc:
+                if self.name in os.path.splitext(file)[0]:
+                    if self.name == os.path.splitext(file)[0]:
+                        number = ' (1)'
                     else:
-                        exist.append(os.path.splitext(file)[0][-1])
-        if len(exist) > 0:
-            exist.insert(0, 0)
-            for i in range(len(exist)):
-                if i != int(exist[i]):
-                    number = ' (' + str(i) + ')'
-                    break
-                else:
-                    number = ' (' + str(len(exist)) + ')'
+                        if len(os.path.splitext(file)[0]) > 2:
+                            exist.append(os.path.splitext(file)[0][-2:-1])
+                        else:
+                            exist.append(os.path.splitext(file)[0][-1])
+            print(exist)
+            if len(exist) > 0:
+                for i in range(len(exist)):
+                    if i != int(exist[i])-1:
+                        number = ' (' + str(i+1) + ')'
+                        break
+                    else:
+                        number = ' (' + str(len(exist)+1) + ')'
         with open('scripts\\' + str(self.name) + number + '.json', 'w') as file:
             json.dump(self.actions, file, indent=2)
 
