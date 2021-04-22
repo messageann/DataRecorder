@@ -1,6 +1,7 @@
 import json
 import os
 
+
 class Script:
     def __init__(self, name):
         self.name = name
@@ -16,21 +17,32 @@ class Script:
 
     def add_rest(self, d):
         self.actions['rest' + str(len(self.actions) + 1)] = {'label': None,
-                                'text': 'rest',
-                                'duration': d,
-                                'record': False}
+                                                             'text': 'rest',
+                                                             'duration': d,
+                                                             'record': False}
 
     def save_script(self):
-        '''exist = 0
+        exist = []
+        number = ''
         sc = os.listdir(os.getcwd() + '\\scripts')
         for file in sc:
-            if os.path.splitext(file)[0] in self.name:
-                exist += 1
-        if exist > 0:
-            exist = ' (' + str(exist) + ')'
-        else:'''
-        exist = ''
-        with open('scripts\\' + str(self.name) + exist + '.json', 'w') as file:
+            if self.name in os.path.splitext(file)[0]:
+                if len(os.path.splitext(file)[0]) > 2:
+                    exist.append(os.path.splitext(file)[0][-2:-1])
+                else:
+                    exist.append(os.path.splitext(file)[0][-1])
+        print(exist)
+        if len(exist) > 0:
+            if exist[-1] not in '1234567890':
+                exist.insert(0, 0)
+                exist.pop(len(exist)-1)
+                for i in range(len(exist)):
+                    if i != int(exist[i]):
+                        number = ' (' + str(i) + ')'
+                        break
+                    else:
+                        number = ' (' + str(len(exist)) + ')'
+        with open('scripts\\' + str(self.name) + number + '.json', 'w') as file:
             json.dump(self.actions, file, indent=2)
 
     def make_str(self):

@@ -27,6 +27,7 @@ class MainWindow(QMainWindow):
         self.ui.save_act.clicked.connect(self.edit_action)
         self.ui.edit.clicked.connect(self.edit_item)
         self.ui.add_act_3.clicked.connect(self.reset_rest)
+        self.ui.save_edit.clicked.connect(self.save_edit)
 
     # Добавление скрипта
     def new_script(self):
@@ -50,7 +51,7 @@ class MainWindow(QMainWindow):
     # Сохранение сценария
     def save(self):
         if self.ui.name.text() == '':
-            self.script.name = 'Unnamed_script'
+            self.script.name = 'Unnamed script'
         else:
             self.script.name = self.ui.name.text()
         self.script.save_script()
@@ -59,7 +60,6 @@ class MainWindow(QMainWindow):
         self.ui.frame.setVisible(False)
         self.show_scripts()
 
-    '''
     # Сохранение переименнованного сценария
     def save_edit(self):
         old = self.script.name
@@ -76,7 +76,6 @@ class MainWindow(QMainWindow):
         self.clear_frame2()
         self.ui.frame.setVisible(False)
         self.show_scripts()
-    '''
 
     # Сохранение нового действия
     def save_action(self):
@@ -167,7 +166,6 @@ class MainWindow(QMainWindow):
         self.ui.check.setVisible(True)
         self.ui.edit.setVisible(False)
         self.ui.save_edit.setVisible(True)
-        # self.ui.save_edit.clicked.connect(self.save_edit)
         self.show_actions()
         self.list_of_act()
 
