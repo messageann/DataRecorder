@@ -66,7 +66,7 @@ for_orange_btn = ("QPushButton {\n"
                   "    border-radius: 15;\n"
                   "}")
 
-for_line_edit = ("border-radius: 20;\n"
+for_line_edit = ("border-radius: 15;\n"
                  "background-color: rgb(255, 255, 255);")
 
 for_btn = ("QPushButton {\n"

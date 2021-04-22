@@ -5,13 +5,13 @@ import styles
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1000, 550)
+        MainWindow.resize(1000, 562)
         MainWindow.setStyleSheet(styles.only_background)
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 1000, 531))
+        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 1000, 562))
         self.tabWidget.setStyleSheet(styles.only_background)
         self.tabWidget.setObjectName("tabWidget")
 

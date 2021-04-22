@@ -116,8 +116,7 @@ class MainWindow(QMainWindow):
             self.ui.add_act_2.setVisible(False)
             self.ui.save_act.setVisible(True)
         else:
-            self.ui.frame_2.setVisible(False)
-            self.ui.save_act.setVisible(False)
+            self.clear_frame2()
 
     # Отредактированное действие
     def edit_action(self):
@@ -134,7 +133,7 @@ class MainWindow(QMainWindow):
             self.show_actions()
             self.list_of_act()
         else:
-            pass
+            self.clear_frame2()
 
     # Выбранный сценарий
     def selected_item(self, item):
@@ -201,6 +200,7 @@ class MainWindow(QMainWindow):
         self.ui.record_2.setChecked(False)
         self.ui.frame_2.setVisible(False)
         self.ui.add_act.setVisible(True)
+        self.ui.save_act.setVisible(False)
         self.ui.check.setVisible(True)
         self.ui.actions.setGeometry(QtCore.QRect(20, 100, 420, 111))
 

@@ -27,21 +27,21 @@ class Script:
         sc = os.listdir(os.getcwd() + '\\scripts')
         for file in sc:
             if self.name in os.path.splitext(file)[0]:
-                if len(os.path.splitext(file)[0]) > 2:
-                    exist.append(os.path.splitext(file)[0][-2:-1])
+                if self.name == os.path.splitext(file)[0]:
+                    number = ' (1)'
                 else:
-                    exist.append(os.path.splitext(file)[0][-1])
-        print(exist)
-        if len(exist) > 0:
-            if exist[-1] not in '1234567890':
-                exist.insert(0, 0)
-                exist.pop(len(exist)-1)
-                for i in range(len(exist)):
-                    if i != int(exist[i]):
-                        number = ' (' + str(i) + ')'
-                        break
+                    if len(os.path.splitext(file)[0]) > 2:
+                        exist.append(os.path.splitext(file)[0][-2:-1])
                     else:
-                        number = ' (' + str(len(exist)) + ')'
+                        exist.append(os.path.splitext(file)[0][-1])
+        if len(exist) > 0:
+            exist.insert(0, 0)
+            for i in range(len(exist)):
+                if i != int(exist[i]):
+                    number = ' (' + str(i) + ')'
+                    break
+                else:
+                    number = ' (' + str(len(exist)) + ')'
         with open('scripts\\' + str(self.name) + number + '.json', 'w') as file:
             json.dump(self.actions, file, indent=2)
 
