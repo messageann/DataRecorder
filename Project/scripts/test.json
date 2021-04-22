@@ -9,7 +9,7 @@
     "label": "2",
     "text": "Leg",
     "duration": 5,
-    "record": false
+    "record": true
   },
   "action3": {
     "label": null,

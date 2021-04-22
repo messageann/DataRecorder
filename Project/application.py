@@ -296,7 +296,7 @@ class MainWindow(QMainWindow):
         self.ui.code.clear()
         self.ui.text.clear()
         self.ui.duration.clear()
-        self.ui.record_2.hide()
+        self.ui.record_2.show()
         self.ui.frame_2.hide()
         self.ui.add_act_res.hide()
         self.ui.save_act.hide()
