@@ -1,9 +1,9 @@
 import json
-
+import os
 
 class Script:
     def __init__(self, name):
-        self._name = name
+        self.name = name
         self.actions = {}
 
     def add_case(self, l, t, d, r, rest=False):
@@ -15,13 +15,22 @@ class Script:
             self.add_rest()
 
     def add_rest(self, d):
-        self.actions['rest'] = {'label': None,
+        self.actions['rest' + str(len(self.actions) + 1)] = {'label': None,
                                 'text': 'rest',
                                 'duration': d,
                                 'record': False}
 
     def save_script(self):
-        with open('scripts\\' + str(self._name) + '.json', 'w') as file:
+        '''exist = 0
+        sc = os.listdir(os.getcwd() + '\\scripts')
+        for file in sc:
+            if os.path.splitext(file)[0] in self.name:
+                exist += 1
+        if exist > 0:
+            exist = ' (' + str(exist) + ')'
+        else:'''
+        exist = ''
+        with open('scripts\\' + str(self.name) + exist + '.json', 'w') as file:
             json.dump(self.actions, file, indent=2)
 
     def make_str(self):
