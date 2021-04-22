@@ -10,7 +10,3 @@ if __name__ == '__main__':
     w = application.MainWindow()
     w.show()
     sys.exit(app.exec_())
-
-
-
-

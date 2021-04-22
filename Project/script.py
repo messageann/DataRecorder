@@ -15,6 +15,20 @@ class Script:
         if rest:
             self.add_rest()
 
+    def add_case_before(self, l, t, d, r, curr_key):
+        add = {'label': l, 'text': t, 'duration': d, 'record': r}
+        temp, i = {}, 1
+        for key, value in self.actions.items():
+            if key == curr_key:
+                temp['action' + str(i)] = add
+                i += 1
+                temp['action' + str(i)] = value
+            else:
+                temp['action' + str(i)] = value
+            i += 1
+        self.actions = temp
+        del temp
+
     def add_rest(self, d):
         self.actions['action' + str(len(self.actions) + 1)] = {'label': None,
                                                              'text': 'Отдых',
@@ -65,3 +79,4 @@ class Script:
             for a in self.actions[act].items():
                 res_str += '  ' + str(a) + '\n'
         return res_str
+
