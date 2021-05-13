@@ -35,6 +35,26 @@ class MainWindow(QMainWindow):
         self.ui.save_as_new.clicked.connect(self.save)
         self.ui.save_as_old.clicked.connect(self.save_old)
         self.ui.cancel_edit.clicked.connect(self.cancel_script)
+        self.ui.down_action.clicked.connect(self.action_down)
+        self.ui.up_action.clicked.connect(self.action_up)
+
+    def action_down(self):
+        cur = self.ui.actions.currentRow()
+        self.script.down(cur)
+        self.show_actions()
+        if cur != self.ui.actions.count() - 1:
+            self.ui.actions.setCurrentRow(cur + 1)
+        else:
+            self.ui.actions.setCurrentRow(cur)
+
+    def action_up(self):
+        cur = self.ui.actions.currentRow()
+        self.script.up(cur)
+        self.show_actions()
+        if cur != 0:
+            self.ui.actions.setCurrentRow(cur - 1)
+        else:
+            self.ui.actions.setCurrentRow(cur)
 
     def choose_save(self):
         self.ui.save_as_new.show()
@@ -234,6 +254,8 @@ class MainWindow(QMainWindow):
         self.ui.save_action.show()
         self.ui.action_cancel.show()
         self.ui.delete_action.show()
+        self.ui.up_action.show()
+        self.ui.down_action.show()
         self.ui.add_before.show()
         key = str(self.ui.actions.currentRow())
         self.ui.code.setText(self.script.actions[key]['label'])
@@ -339,6 +361,8 @@ class MainWindow(QMainWindow):
         self.ui.save_as_new.hide()
         self.ui.save_as_old.hide()
         self.ui.cancel_edit.hide()
+        self.ui.up_action.hide()
+        self.ui.down_action.hide()
 
     # Очистить добавление действия
     def clear_frame2(self):
@@ -359,3 +383,5 @@ class MainWindow(QMainWindow):
         self.ui.record.setEnabled(True)
         self.ui.act_info.hide()
         self.ui.add_before.hide()
+        self.ui.up_action.hide()
+        self.ui.down_action.hide()

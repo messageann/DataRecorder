@@ -32,11 +32,15 @@ class Script:
         self.actions = temp
         del temp
 
-    def add_rest(self, d):
-        self.actions['action' + str(len(self.actions) + 1)] = {'label': None,
-                                                               'text': 'Отдых',
-                                                               'duration': d,
-                                                               'record': False}
+    def up(self, curr_act):
+        if curr_act != 0:
+            self.actions[str(curr_act-1)], self.actions[str(curr_act)] = self.actions[str(curr_act)], self.actions[str(curr_act-1)]
+
+
+    def down(self, curr_act):
+        if curr_act != len(self.actions)-1:
+            self.actions[str(curr_act+1)], self.actions[str(curr_act)] = self.actions[str(curr_act)], self.actions[str(curr_act+1)]
+
 
     def delete_action(self, key):
         del self.actions[key]
