@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1035</width>
+    <height>690</height>
+   </rect>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:#EEEEEE;</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1041</width>
+      <height>671</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(238, 238, 238);</string>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="scripts">
+     <attribute name="title">
+      <string>Сценарии</string>
+     </attribute>
+     <widget class="QLabel" name="all_scenes">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>10</y>
+        <width>110</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Bahnschrift SemiCondensed</family>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #222831;</string>
+      </property>
+      <property name="text">
+       <string>Cценарии</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="list">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>401</width>
+        <height>571</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Bahnschrift Light</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(57, 62, 70);
+color: rgb(255, 255, 255);
+border-radius: 20;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="add">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>10</y>
+        <width>111</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Bahnschrift SemiBold</family>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="mouseTracking">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	color: white;
+	background-color: #FD7013;
+	border-radius: 15;
+}
+
+QPushButton:pressed {
+	color: #EEEEEE;
+	background-color: #D65F00;
+	border-radius: 15;
+}</string>
+      </property>
+      <property name="text">
+       <string>Добавить</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>0</y>
+        <width>571</width>
+        <height>631</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLineEdit" name="name">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>391</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Bahnschrift Light</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius: 15;
+background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="add_scene">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>240</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Bahnschrift SemiCondensed</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #222831;</string>
+       </property>
+       <property name="text">
+        <string>Добавление сценария</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="add_act">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>320</y>
+         <width>121</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Bahnschrift SemiBold</family>
+         <pointsize>7</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	color: white;
+	background-color: #393E46;
+	border-radius: 15;
+}
+
+QPushButton:pressed {
+	color: #EEEEEE;
+	background-color: #222831;
+	border-radius: 15;
+}</string>
+       </property>
+       <property name="text">
+        <string>Добавить действие</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QListWidget" name="actions">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>90</y>
+         <width>511</width>
+         <height>221</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Bahnschrift Light</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);
+border-radius: 20;</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="save">
+       <property name="geometry">
+        <rect>
+         <x>460</x>
+         <y>10</y>
+         <width>101</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Bahnschrift SemiBold</family>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	color: white;
+	background-color: #FD7013;
+	border-radius: 15;
+}
+
+QPushButton:pressed {
+	color: #EEEEEE;
+	background-color: #D65F00;
+	border-radius: 15;
+}</string>
+       </property>
+       <property name="text">
+        <string>Сохранить</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QFrame" name="frame_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>360</y>
+         <width>511</width>
+         <height>251</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QLineEdit" name="code">
+        <property name="geometry">
+         <rect>
+          <x>270</x>
+          <y>65</y>
+          <width>240</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Bahnschrift Light</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius: 15;
+background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="text">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>130</y>
+          <width>511</width>
+          <height>121</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Bahnschrift Light</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius: 20;
+background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="record">
+        <property name="geometry">
+         <rect>
+          <x>5</x>
+          <y>5</y>
+          <width>271</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Bahnschrift Light</family>
+          <pointsize>11</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <underline>false</underline>
+         </font>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>Записывать данные на шаге</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="duration">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>65</y>
+          <width>240</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Bahnschrift Light</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius: 15;
+background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>40</y>
+          <width>121</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Bahnschrift Light</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Длительность:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>40</y>
+          <width>121</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Bahnschrift Light</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Метка класса:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>105</y>
+          <width>121</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Bahnschrift Light</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Текст команды:</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QPushButton" name="save_2">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>170</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Bahnschrift SemiBold</family>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	color: white;
+	background-color: #FD7013;
+	border-radius: 5;
+}
+
+QPushButton:pressed {
+	color: #EEEEEE;
+	background-color: #D65F00;
+	border-radius: 5;
+}</string>
+       </property>
+       <property name="text">
+        <string>Up</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="save_3">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>210</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Bahnschrift SemiBold</family>
+         <pointsize>8</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	color: white;
+	background-color: #FD7013;
+	border-radius: 5;
+}
+
+QPushButton:pressed {
+	color: #EEEEEE;
+	background-color: #D65F00;
+	border-radius: 5;
+}</string>
+       </property>
+       <property name="text">
+        <string>Dwn</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="save_4">
+       <property name="geometry">
+        <rect>
+         <x>490</x>
+         <y>50</y>
+         <width>71</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Bahnschrift SemiBold</family>
+         <pointsize>8</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	color: white;
+	background-color: #393E46;
+	border-radius: 15;
+}
+
+QPushButton:pressed {
+	color: #EEEEEE;
+	background-color: #D65F00;
+	border-radius: 15;
+}</string>
+       </property>
+       <property name="text">
+        <string>Заменить</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="save_5">
+       <property name="geometry">
+        <rect>
+         <x>410</x>
+         <y>50</y>
+         <width>71</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Bahnschrift SemiBold</family>
+         <pointsize>8</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	color: white;
+	background-color: #393E46;
+	border-radius: 15;
+}
+
+QPushButton:pressed {
+	color: #EEEEEE;
+	background-color: #D65F00;
+	border-radius: 15;
+}</string>
+       </property>
+       <property name="text">
+        <string>Новый</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="rec">
+     <attribute name="title">
+      <string>Запись данных</string>
+     </attribute>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1035</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave_as"/>
+    <addaction name="separator"/>
+    <addaction name="actionImport"/>
+    <addaction name="actionExport"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuSettings"/>
+  </widget>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionSave_as">
+   <property name="text">
+    <string>Save as</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Export</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
