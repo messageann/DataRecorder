@@ -129,6 +129,7 @@ class MainWindow(QMainWindow):
                                         QMessageBox.Cancel | QMessageBox.Ok)
         if reply == QMessageBox.Ok:
             self.ui.stackedWidget.setCurrentIndex(1)
+            self.ui.name_of_data.clear()
             sc = os.listdir(os.getcwd() + '\\scripts')
             for file in sc:
                 if file == item.text() + '.json':
