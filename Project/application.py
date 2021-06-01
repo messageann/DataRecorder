@@ -1,8 +1,16 @@
-from PyQt5.QtWidgets import QMainWindow
+import csv
+import datetime
+import functools
+import time
+
+from PyQt5 import QtCore, QtTest
+from PyQt5.QtCore import QTimer
+from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from ui import Ui_MainWindow
 from script import Script
 import os
 import json
+import random
 
 
 class MainWindow(QMainWindow):
@@ -10,7 +18,10 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.timer = QTimer(self)
         self.initUI()
+        self.is_reading = False
+
 
     def initUI(self):
         self.setWindowTitle('Scripts beta')
@@ -37,6 +48,126 @@ class MainWindow(QMainWindow):
         self.ui.cancel_edit.clicked.connect(self.cancel_script)
         self.ui.down_action.clicked.connect(self.action_down)
         self.ui.up_action.clicked.connect(self.action_up)
+        self.ui.list_2.itemDoubleClicked.connect(self.selected_script)
+        self.ui.tabWidget.tabBarClicked.connect(self.show_scripts)
+        self.ui.cancel_select.clicked.connect(self.cancel_sel)
+        self.ui.change_scene.clicked.connect(self.edit_select)
+        self.ui.start.clicked.connect(self.start_of_record)
+        self.ui.cancel_record.clicked.connect(self.stop_record)
+        self.ui.close_record.clicked.connect(self.cancel_sel)
+
+    def stop_record(self):
+        self.is_reading = False
+
+    def start_of_record(self):
+        self.is_reading = True
+        self.ui.close_record.hide()
+        self.ui.tabWidget.setTabEnabled(0, False)
+        self.ui.stackedWidget.setCurrentIndex(2)
+        self.ui.bck_for_record.setText('Приготовьтесь, запись начнется через...')
+        QtTest.QTest.qWait(3000)
+        hellos = ['3', '2', '1']
+        for hello in hellos:
+            self.ui.bck_for_record.setText(hello)
+            QtTest.QTest.qWait(1000)
+        self.ui.cancel_record.show()
+
+        current_file = self.ui.name_of_data.text()
+        if current_file == '':
+            now = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+            current_file = self.script.name + ' ' + now
+        with open(os.getcwd() + '\\data\\' + current_file + '.csv', 'w', newline='') as file:
+            writer = csv.writer(file, delimiter=';')
+            writer.writerows([['', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]])
+            # eeg = EEG()
+            for act in self.script.actions.keys():
+                if not self.is_reading:
+                    break
+                self.ui.bck_for_record.setText(self.script.actions[act]['text'])
+                if self.script.actions[act]['label'] != '':
+                    for i in range(random.randint(15, 50)):
+                        line = [self.script.actions[act]['label']]
+                        for j in range(14):
+                            line.append(str(random.uniform(0.0, 5000.0)))
+                        writer.writerows([line])
+                        # eeg.start()
+                QtTest.QTest.qWait(self.script.actions[act]['duration'])
+                for i in range(self.script.actions[act]['duration']//10):
+                    if not self.is_reading:
+                        break
+                    QtTest.QTest.qWait(10)
+                # eeg.stop()
+                # while eeg.has_data():
+                #    data = eeg.get_data().insert(0, script.actions[act]['label'])
+                #    writer.writerow(data)
+            self.ui.bck_for_record.setText('Запись окончена')
+            self.ui.cancel_record.hide()
+            QtTest.QTest.qWait(3000)
+        self.ui.close_record.show()
+        self.ui.tabWidget.setTabEnabled(0, True)
+        if self.is_reading:
+            self.is_reading = False
+            self.ui.bck_for_record.setText(
+                'Записанные данные сохранены в файл\n"' + current_file + '"')
+        else:
+            os.rename(os.getcwd() + '\\data\\' + current_file + '.csv',
+                      os.getcwd() + '\\data\\' + current_file + ' (canceled).csv')
+            self.ui.bck_for_record.setText('Записанные данные сохранены в файл\n"' + current_file + ' (canceled)"')
+
+    def edit_select(self):
+        self.ui.stackedWidget.setCurrentIndex(0)
+        self.ui.tabWidget.setCurrentIndex(0)
+        self.selected_item(self.ui.list_2.currentItem())
+        self.edit()
+
+    def cancel_sel(self):
+        self.ui.stackedWidget.setCurrentIndex(0)
+
+    def selected_script(self, item):
+        reply = QMessageBox.information(self, "Подтверждение",
+                                        f'Выбрать сценарий "{self.ui.list_2.currentItem().text()}"?',
+                                        QMessageBox.Cancel | QMessageBox.Ok)
+        if reply == QMessageBox.Ok:
+            self.ui.stackedWidget.setCurrentIndex(1)
+            sc = os.listdir(os.getcwd() + '\\scripts')
+            for file in sc:
+                if file == item.text() + '.json':
+                    self.script = Script(item.text())
+                    with open('scripts\\' + file, 'r') as js:
+                        self.script.actions = json.load(js)
+            acts = self.script.get_acts()
+            self.ui.listView.clear()
+            for act in acts:
+                self.ui.listView.addItem(act)
+
+    # Просмотр выбранного сценария
+    def selected_item(self, item):
+        self.clear_frame()
+        self.clear_frame2()
+        self.ui.add_scene.setText('Просмотр сценария')
+        self.ui.frame.show()
+        self.ui.name.setText(item.text())
+        self.ui.name.setReadOnly(True)
+        self.ui.cancel.hide()
+        self.ui.save.hide()
+        self.ui.edit.show()
+        self.ui.add_new_action.hide()
+        self.ui.delete.show()
+        try:
+            self.ui.actions.itemDoubleClicked.disconnect(self.activated_action_for_edit)
+            self.ui.actions.itemDoubleClicked.connect(self.activated_action_for_show)
+        except TypeError:
+            pass
+
+        sc = os.listdir(os.getcwd() + '\\scripts')
+        for file in sc:
+            if file == item.text() + '.json':
+                self.script = Script(item.text())
+                with open('scripts\\' + file, 'r') as js:
+                    self.script.actions = json.load(js)
+        acts = self.script.get_acts()
+        for act in acts:
+            self.ui.actions.addItem(act)
 
     def action_down(self):
         cur = self.ui.actions.currentRow()
@@ -288,35 +419,6 @@ class MainWindow(QMainWindow):
             if self.ui.text.text() == '':
                 self.ui.text.setPlaceholderText('Введите действие!')
 
-    # Просмотр выбранного сценария
-    def selected_item(self, item):
-        self.clear_frame()
-        self.clear_frame2()
-        self.ui.add_scene.setText('Просмотр сценария')
-        self.ui.frame.show()
-        self.ui.name.setText(item.text())
-        self.ui.name.setReadOnly(True)
-        self.ui.cancel.hide()
-        self.ui.save.hide()
-        self.ui.edit.show()
-        self.ui.add_new_action.hide()
-        self.ui.delete.show()
-        try:
-            self.ui.actions.itemDoubleClicked.disconnect(self.activated_action_for_edit)
-            self.ui.actions.itemDoubleClicked.connect(self.activated_action_for_show)
-        except TypeError:
-            pass
-
-        sc = os.listdir(os.getcwd() + '\\scripts')
-        for file in sc:
-            if file == item.text() + '.json':
-                self.script = Script(item.text())
-                with open('scripts\\' + file, 'r') as js:
-                    self.script.actions = json.load(js)
-        acts = self.script.get_acts()
-        for act in acts:
-            self.ui.actions.addItem(act)
-
     # Изменение сценария
     def edit(self):
         self.ui.add_scene.setText('Изменение сценария')
@@ -339,9 +441,12 @@ class MainWindow(QMainWindow):
     # Отобразить все скрипты
     def show_scripts(self):
         self.ui.list.clear()
+        self.ui.list_2.clear()
         sc = os.listdir(os.getcwd() + '\\scripts')
         for file in sc:
-            self.ui.list.addItem(os.path.splitext(file)[0])
+            cur = os.path.splitext(file)[0]
+            self.ui.list.addItem(cur)
+            self.ui.list_2.addItem(cur)
 
     # Очистить правую часть
     def clear_frame(self):

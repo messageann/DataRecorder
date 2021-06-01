@@ -22,6 +22,11 @@ font_check = QtGui.QFont()
 font_check.setFamily("Bahnschrift Light")
 font_check.setPointSize(8)
 
+# Record
+font_rec = QtGui.QFont()
+font_rec.setFamily("Bahnschrift Light")
+font_rec.setPointSize(14)
+
 # Big btn
 font_big_btn = QtGui.QFont()
 font_big_btn.setFamily("Bahnschrift SemiBold")

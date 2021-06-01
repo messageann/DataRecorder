@@ -1,0 +1,20 @@
+{
+  "0": {
+    "label": "",
+    "text": "a",
+    "duration": 3000,
+    "record": false
+  },
+  "1": {
+    "label": "",
+    "text": "b",
+    "duration": 3000,
+    "record": false
+  },
+  "2": {
+    "label": "",
+    "text": "c",
+    "duration": 3000,
+    "record": false
+  }
+}
