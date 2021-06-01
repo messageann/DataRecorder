@@ -55,13 +55,23 @@ class MainWindow(QMainWindow):
         self.ui.start.clicked.connect(self.start_of_record)
         self.ui.cancel_record.clicked.connect(self.stop_record)
         self.ui.close_record.clicked.connect(self.cancel_sel)
+        self.ui.delete_record.clicked.connect(self.delete_rec)
 
+    def delete_rec(self):
+        file_for_delete = self.ui.bck_for_record.text().split('"')[1]
+        sc = os.listdir(os.getcwd() + '\\data')
+        for file in sc:
+            if file == file_for_delete + '.csv':
+                os.remove(os.getcwd() + '\\data\\' + file)
+        self.cancel_sel()
+        
     def stop_record(self):
         self.is_reading = False
 
     def start_of_record(self):
         self.is_reading = True
         self.ui.close_record.hide()
+        self.ui.delete_record.hide()
         self.ui.tabWidget.setTabEnabled(0, False)
         self.ui.stackedWidget.setCurrentIndex(2)
         self.ui.bck_for_record.setText('Приготовьтесь, запись начнется через...')
@@ -91,11 +101,13 @@ class MainWindow(QMainWindow):
                             line.append(str(random.uniform(0.0, 5000.0)))
                         writer.writerows([line])
                         # eeg.start()
-                QtTest.QTest.qWait(self.script.actions[act]['duration'])
-                for i in range(self.script.actions[act]['duration']//10):
+                dur = self.script.actions[act]['duration']
+                for i in range(dur//500):
                     if not self.is_reading:
                         break
-                    QtTest.QTest.qWait(10)
+                    QtTest.QTest.qWait(500)
+                if self.is_reading:
+                    QtTest.QTest.qWait(dur % 500)
                 # eeg.stop()
                 # while eeg.has_data():
                 #    data = eeg.get_data().insert(0, script.actions[act]['label'])
@@ -113,6 +125,7 @@ class MainWindow(QMainWindow):
             os.rename(os.getcwd() + '\\data\\' + current_file + '.csv',
                       os.getcwd() + '\\data\\' + current_file + ' (canceled).csv')
             self.ui.bck_for_record.setText('Записанные данные сохранены в файл\n"' + current_file + ' (canceled)"')
+            self.ui.delete_record.show()
 
     def edit_select(self):
         self.ui.stackedWidget.setCurrentIndex(0)

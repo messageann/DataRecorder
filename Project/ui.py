@@ -656,6 +656,16 @@ class Ui_MainWindow(object):
         self.close_record.hide()
         self.close_record.setText('Закрыть')
 
+        self.delete_record = QtWidgets.QPushButton(self.page_3)
+        self.delete_record.setGeometry(QtCore.QRect(460, 440, 100, 31))
+        self.delete_record.setText('Удалить файл')
+        self.delete_record.setFont(styles.font_ltl_btn)
+        self.delete_record.setMouseTracking(False)
+        self.delete_record.setStyleSheet(styles.for_btn)
+        self.delete_record.setCheckable(False)
+        self.delete_record.setObjectName("delete_record")
+        self.delete_record.hide()
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1035, 21))
